@@ -64,7 +64,6 @@ form {
 	border: 1mm outset gray;
 }
 
-
 .die {
 	position: relative;
 	width: 20mm;
@@ -181,6 +180,25 @@ form {
 	padding-right: 0.5mm;
 }
 
+#deck {
+	background: rgba(0, 0, 0, 0.3);
+	position: fixed;
+	bottom: 10mm;
+	left: 0;
+	width: 100%;
+	padding-bottom: 15mm;
+	line-height: 8mm;
+	transition-duration: 0.5s;
+}
+
+#deck.show {
+	bottom: 0mm;
+}
+
+#deck.hide {
+	bottom: -100%;
+}
+
 #dice {
 	background: rgba(0, 0, 0, 0.3);
 	position: fixed;
@@ -200,6 +218,10 @@ form {
 	bottom: -100%;
 }
 
+#dice .inplay {
+	opacity: 0.5;
+}
+
 .addToDeck {
 	border-radius: 2mm;
 	border: none;
@@ -215,10 +237,6 @@ form {
 
 #playmat .inplay {
 	display: inline-block;
-}
-
-#deck .inplay {
-	opacity: 0.5;
 }
 
 #focus {
@@ -267,4 +285,551 @@ form {
 	border-bottom-color: white;
 	left: 5.5mm;
 	bottom: -0.5mm;
+}
+
+/** This is the Card stuff!! **/
+
+.card {
+	background: url() 20px 8px;
+	width: 300px;
+	height: 419px;
+	position: relative;
+	font-family: Roboto;
+	overflow: hidden;
+	border-radius: 20px;
+	border-style: solid;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28);
+	background: white;
+	margin: 10px;
+	float: left;
+	z-index: -1;
+}
+
+.template {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+.template_text {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -2;
+}
+
+
+.illustration {
+	background: url() 20px 8px;
+	width: 335px;
+	position: absolute;
+	border-radius: 0 0 50% 50%;
+	height: 266px;
+	top: -13px;
+	right: -20px;
+	border: 5px solid #e60a0a;
+	box-shadow: 0 2px 25px rgba(255, 21, 3, 0.53);
+	z-index: -1;
+}
+
+.blue .illustration {
+		
+	box-shadow: 0 2px 25px rgba(8, 144, 200, 0.53);
+	border-color: #007bff;
+}
+
+.yellow .illustration {
+		box-shadow: 0 2px 25px rgba(209, 185, 3, 0.64);
+		border-color: #ecd900;
+}
+
+.gray .illustration {
+		box-shadow: 0 2px 25px rgba(101, 101, 101, 0.64);
+		border-color: gray;
+}
+
+.health {
+	position: absolute;
+	z-index: 1;
+	background-color: black;
+	color: white;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: bold;
+	top: 22px;
+	right: 14px;
+	padding-top: 5px;
+	padding-bottom: 0;
+	width: 48px;
+	font: 30px Teko;
+	font-weight: 700;
+	opacity: 1;
+	border-color: white;
+	border-style: solid;
+	border-top-style: dotted;
+	border-bottom-style: dotted;
+}
+
+.flavor {
+	font-size: 11px;
+	font-style: italic;
+	display: inline-block;
+	margin-top: 5px;
+}
+
+.cost {
+	position: absolute;
+	z-index: 1;
+	background-color: white;
+	color: black;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: bold;
+	border: 3px solid black;
+	top: 17px;
+	width: 52px;
+	font: 30px/57px Teko;
+	font-weight: 700;
+	opacity: 1;
+	left: 6px;
+	padding-left: 2px;
+	border-top-style: dotted;
+	border-bottom-style: dotted;
+	height: 52px;
+}
+
+.cost svg {
+	fill: black;
+	stroke: black;
+	min-width: 31px;
+	min-height: auto;
+	max-height: 26px;
+	margin-right: -3px;
+	margin-bottom: 0;
+	margin-left: -3px;
+	position: relative;
+	top: 13px;
+}
+
+.character .cost {
+	display: none;
+}
+
+.title {
+	z-index: 2;
+	float: left;
+	display: block;
+	position: absolute;
+	font: 21px/19px Teko;
+	text-transform: uppercase;
+	text-align: center;
+	top: 19px;
+	opacity: 1;
+	left: 69px;
+	width: 154px;
+	border-radius: 0 0 10 10;
+}
+
+.title.oneline {
+	line-height: 37px;
+	white-space: nowrap;
+
+}
+
+.title .Y {
+}
+.subtitle {
+	font-size: 17px;
+	font-weight: 300;
+	line-height: 14px;
+}
+
+.points {
+	position: absolute;
+	left: -1px;
+	background-color: white;
+	width: 48px;
+	border: 2px solid black;
+	border-radius: 0 6 6 0;
+	text-align: center;
+	bottom: 4px;
+	border-left-style: none;
+	padding-left: 2px;
+	padding-bottom: 0;
+	font: 16px teko;
+	font-weight: 600;
+	letter-spacing: 1px;
+	height: 20px;
+}
+
+.affiliation {
+	position: absolute;
+	left: 56px;
+	background-color: white;
+	width: 48px;
+	border-style: solid;
+	border-radius: 6 0 0 6;
+	text-align: center;
+	bottom: 4px;
+	border-right-style: none;
+	border-width: 2px;
+	padding-right: 1px;
+	font-size: 12px;
+}
+
+.setid {
+	position: absolute;
+	width: 48px;
+	border-radius: 50%/80% 80% 0 0;
+	text-align: center;
+	bottom: -7px;
+	font-size: 12px;
+	padding: 6px 0 10px;
+	color: white;
+	right: -5px;
+	background-color: black;
+	text-transform: lowercase;
+	font-variant: small-caps;
+}
+
+.rarity {
+/*	position: absolute;
+	text-align: right;
+	bottom: -10px;
+	font: 13px teko;
+	border-width: 2px;
+	padding: 4px 0 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	right: 51px;*/
+	display: none;
+}
+
+.artist {
+	position: absolute;
+	text-align: right;
+	bottom: -10px;
+	font: 13px teko;
+	border-width: 2px;
+	padding: 4px 0 10px;
+	text-transform: uppercase;
+	right: 44px;
+}
+
+.red .color {
+	border-color: #e60a0a;
+}
+
+.blue .color {
+	border-color: #007bff;
+}
+
+.yellow .color {
+	border-color: #ecd900;
+}
+
+.gray .color {
+	border-color: gray;
+}
+
+.color {
+	position: absolute;
+	left: 107px;
+	background-color: white;
+	border-style: solid;
+	border-radius: 0 6 6 0;
+	text-align: center;
+	bottom: 4px;
+	padding-right: 6px;
+	border-left-style: none;
+	padding-left: 5px;
+	font-size: 12px;
+	border-width: 2px;
+	text-transform: capitalize;
+}
+
+.villain {
+	background-color: black;
+	color: white;
+	border-color: black;
+}
+
+.hero {
+	background-color: white;
+	color: black;
+}
+
+.neutral {
+	background-color: #b5b5b5;
+	color: black;
+}
+
+.cdie {
+	position: absolute;
+	left: -3px;
+	bottom: 33px;
+	background-color: white;
+	width: 49px;
+	border: 2px solid black;
+	border-radius: 6;
+	text-align: center;
+	padding: 1px;
+}
+
+.cdieface {
+	background-color: black;
+	display: block;
+	color: white;
+	font: 17px Teko;
+	font-weight: 600;
+	border-radius: 4px;
+	margin: 1px;
+	padding-top: 2px;
+	min-height: 25px;
+}
+
+.diecost {
+	background-color: white;
+	border-radius: 6 6 0 0 ;
+	font-size: 14px;
+	padding-left: 5px;
+	color: black;
+	fill: black;
+	display: block;
+	height: 17px;
+	width: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: -2px;
+}
+.cdie .cdiecost svg {
+	width: 12px;
+	height: 12px;
+	color:  black;
+	fill: black;
+	stroke: black;
+	margin-left: -3px;
+	margin-right: 4px;
+}
+.cdie svg {
+	max-width: 16px;
+	max-height: 16px;
+	stroke: white;
+	vertical-align: top;
+	top: 0;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+svg {
+	max-width: 16px;
+	max-height: 16px;
+	fill: black;
+	stroke: black;
+	vertical-align: top;
+	fill: currentColor;
+}
+
+.ctype {
+	font: 17px Teko;
+	position: absolute;
+	top: 273px;
+	left: 58px;
+	width: 182px;
+	text-transform: uppercase;
+	text-align: center;
+	opacity: 1;
+	font-weight: 300;
+	word-spacing: 5px;
+	letter-spacing: 0.5px;
+}
+
+.text {
+	font-size: 13px;
+	font-weight: 300;
+	position: absolute;
+	top: 296px;
+	left: 58px;
+	width: 218px;
+	text-align: left;
+	height: auto;
+}
+
+
+
+.upgrade .health{
+	display: none;
+}
+
+.upgrade .illustration{
+	background-position: 15px 13px;
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+}
+
+.upgrade .title{
+	top: 223px;
+	opacity: 1;
+	max-height: 36px;
+	padding-top: 5px;
+	padding-bottom: 2px;
+	max-width: 149px;
+	left: 72px;
+}
+
+.upgrade .type {
+	top: 274px;
+	left: 57px;
+}
+
+.upgrade .points {
+	display: none;
+}
+
+.upgrade .die {
+	bottom: 4px;
+}
+.upgrade .false {
+	left: 38px !important;
+	width: 222px !important;
+}
+.upgrade .text {
+	left: 60px;
+	width: 200px;
+}
+
+.event .die, .event .points, .event .health {
+	display: none;
+}
+
+.event .illustration {
+	background-position: 0 5px;
+	width: 310px;
+	height: 310px;
+	border-radius: 50%;
+	top: -16px;
+	right: -9px;
+	background-size: 100%;
+}
+
+.event .type {
+	top: 295px;
+	z-index: 1;
+}
+
+.event .text {
+	left: 15px;
+	width: 270px;
+	top: 315px;
+}
+
+.event .title{
+	top: 241px;
+	max-height: 35px;
+	left: 71px;
+}
+
+/*.artist {
+	display: none;
+}*/
+
+.battlefield {
+	width: 419px;
+	height: 300px;
+}
+
+.battlefield .cost, .battlefield .health, .battlefield .die, .battlefield .points, .battlefield .type {
+	display: none;
+}
+
+.battlefield .illustration {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	border-radius: 0;
+	bottom: 0;
+	width: 389px;
+	height: 210px;
+	right: auto;
+	left: 0;
+	border-style: none;
+	background-position: -1px 11px;
+}
+
+.battlefield .title {
+	top: 23px;
+	left: 132px;
+}
+
+.battlefield .rarity {
+	border-radius: 5px;
+	background-color: white;
+	padding: 3px 4px 0 5px;
+	bottom: 0;
+}
+
+.battlefield .text {
+	top: 206px;
+	min-width: 330px;
+}
+
+.support .points, .support .health {
+	display: none;
+}
+
+.support .die {
+	left: 245px;
+	bottom: auto;
+	top: 5px;
+}
+
+.support .title {
+	top: 28px;
+	left: 71px;
+	height: 56px;
+}
+
+.support .text {
+	left: 33px;
+	width: 230px;
+}
+
+.support .cost {
+	z-index: 2;
+}
+
+
+@media print {
+
+	.card {
+		page-break-inside: avoid;
+		transform: scale(0.746);
+		box-shadow: none;
+		border: 1px dashed black;
+		margin: -56px -39px -52px;
+	}
+	.battlefield {
+		transform: scale(0.746) rotate(90deg);
+		position: relative;
+		top: 60px;
+		margin-left: -98px;
+		margin-right: -98px;
+	}
+	
+	form {
+		display: none;
+	}
+}
+
+@page
+{
+    size: A4;   /* auto is the initial value */
+
+    /* this affects the margin in the printer settings */
+    margin: 0mm 0mm 0mm 0mm;
 }

@@ -6,6 +6,7 @@ var dicepool = getUrlVars()["dicepool"];
 var dicepool = JSON.parse("[" + dicepool + "]");
 
 var dicecounter = 1;
+var cardcounter = 1;
 var selected = []
 var focusedDie = ""
 var action = ""
@@ -14,6 +15,7 @@ window.onload = function () {
 		deck = dicepool;
 	}
 	for (i = 0; i < deck.length; i++) {
+	    seedDice(deck[i]);
 	    seedDeck(deck[i]);
 	}
 };
@@ -36,7 +38,7 @@ function fetchCardData(id) {
 }
 
 
-function seedDeck (id) {
+function seedDice (id) {
 	fetchCardData(id);
 
 
@@ -58,11 +60,28 @@ function seedDeck (id) {
 dicecounter += 1;
 }
 
+function seedDeck (id) {
+	fetchCardData(id);
+
+	//var newHtml = ('<div onclick="selectCard(c'+id+''+cardcounter+', $(this))"  id="c'+id+''+cardcounter+'" class="card unplayed ' + carddata.faction_code + '"><span class="id"><span class="type">'+ carddata.type_name[0] + '</span> ' + carddata.name[0] + carddata.name[1] + carddata.name[2] + carddata.name[3] + carddata.name[4] +'</span>' + face + '</div>');
+	newHtml = addCardHTML(id)
+	$('#playmat').append( newHtml );
+	console.log("foo")
+	replaceInlineSymbol();
+	$('#'+id+''+cardcounter).data(carddata)
+
+	newHtml = ('<div onclick="putInPlay(c'+id+''+cardcounter+', $(this))" class="addTodeck ' + carddata.faction_code + ' ' + carddata.type_name + '"><span class="type">'+ carddata.type_name[0] + '</span> ' + carddata.name + '</div>')
+	$('#deck').append( newHtml );
+
+
+cardcounter += 1;
+}
+
 function selectAction (action, element) {
 	if (action == addRemoveDice) {
 		addRemoveDice()
-	if (action == addRemoveCard) {
-		addRemoveCard()
+	} else if (action == addRemoveDeck) {
+		addRemoveDeck()
 	} else if (action == focusDie) {
 		focusDie($('#'+selected[0]))
 	} else {
@@ -78,6 +97,17 @@ function selectAction (action, element) {
 };
 
 function selectDice (id,element) {
+	if ($('#'+id).hasClass("selected")) {
+		element.removeClass('selected');
+		var index = selected.indexOf('#'+id);
+		selected.splice(index);
+	} else {
+		selected.push(id)
+		element.addClass('selected');
+	}
+}
+
+function selectCard (id,element) {
 	if ($('#'+id).hasClass("selected")) {
 		element.removeClass('selected');
 		var index = selected.indexOf('#'+id);
@@ -126,6 +156,10 @@ function focusDie2(n) {
 }
 
 function addRemoveDice() {
+	if ($('#deck').attr('class') == 'show') {
+		$('#deck').removeClass('show');
+		$('#deck').addClass('hide');
+	}
 	if ($('#dice').attr('class') == 'hide') {
 		$('#dice').removeClass('hide');
 		$('#dice').addClass('show');
@@ -136,7 +170,11 @@ function addRemoveDice() {
 
 }
 
-function addRemoveCard() {
+function addRemoveDeck() {
+	if ($('#dice').attr('class') == 'show') {
+		$('#dice').removeClass('show');
+		$('#dice').addClass('hide');
+	}
 	if ($('#deck').attr('class') == 'hide') {
 		$('#deck').removeClass('hide');
 		$('#deck').addClass('show');
@@ -188,6 +226,7 @@ function replaceInlineSymbol () {
       $(this).html(newHTML);
     }
   });
+
   $("span").each(function () {
       var newHTML = $(this).html()
       newHTML = $(this).html().replace('null' , '');
@@ -207,7 +246,7 @@ function replaceInlineSymbol () {
   });
 }
 
-function addCard (id) {
+function addCardHTML (id) {
 	fetchCardData(id);
 
 	console.log(carddata);
@@ -225,11 +264,16 @@ function addCard (id) {
 	};
 	var dice = ''
 	if (carddata.has_die) {
-		dice = ('<div class="die"><div class="dieface">[' + carddata.sides[0] + ']</div><div class="dieface">[' + carddata.sides[1] + ']</div><div class="dieface">[' + carddata.sides[2] + ']</div><div class="dieface">[' + carddata.sides[3] + ']</div><div class="dieface">[' + carddata.sides[4] + ']</div><div class="dieface">[' + carddata.sides[5] + ']</div></div>')
+		dice = ('<div class="cdie"><div class="cdieface">[' + carddata.sides[0] + ']</div><div class="cdieface">[' + carddata.sides[1] + ']</div><div class="cdieface">[' + carddata.sides[2] + ']</div><div class="cdieface">[' + carddata.sides[3] + ']</div><div class="cdieface">[' + carddata.sides[4] + ']</div><div class="cdieface">[' + carddata.sides[5] + ']</div></div>')
 	}
-	var newHtml = ('<div class="card ' + carddata.type_code + ' ' + carddata.faction_code + '"><span class="title ' + lines + '">' + uniqueness + carddata.name + '<br/> <span class="subtitle">' + carddata.subtitle + '</span></span><span class="health">' + carddata.health + '</span><span class="cost">' + carddata.cost + '<svg width="100" height="100" viewBox="0 0 100 100"><g transform="translate(0,-952.36216)"><ellipse cx="49.540581" cy="1003.4341" rx="14.776036" ry="14.776035"></ellipse><path d="m 13.016845,997.99769 0,-32.77182 32.312405,0.61255 0,16.84533 c 0,0 -1.878657,0.39317 -2.756509,0.7657 -0.926793,0.3933 -1.736087,1.02006 -2.603369,1.53139 -1.123681,0.66249 -2.32751,1.20551 -3.369066,1.99082 -1.066768,0.80432 -2.04875,1.73484 -2.909648,2.7565 -0.711591,0.84447 -1.236502,1.83018 -1.837672,2.75651 -0.624482,0.96225 -1.446552,1.83126 -1.837672,2.90965 -0.263379,0.72619 0.03595,1.60456 -0.306279,2.29709 -0.09595,0.19416 -0.459418,0.45942 -0.459418,0.45942 z"></path><path d="m 54.517611,965.83842 32.159265,0.15314 0,32.15927 -16.69219,0 c 0,0 -0.434514,-1.76163 -0.765697,-2.60337 -0.459708,-1.16839 -1.054325,-2.28311 -1.684533,-3.36907 -0.646659,-1.11431 -1.34573,-2.20464 -2.143951,-3.21592 -0.604227,-0.76551 -1.268491,-1.4887 -1.990811,-2.14395 -0.998159,-0.90547 -2.086416,-1.71511 -3.215927,-2.45023 -0.976547,-0.63557 -1.97035,-1.27936 -3.062787,-1.68454 -0.929283,-0.34467 -2.909648,-0.61256 -2.909648,-0.61256 z"></path><path d="m 86.676876,1007.3392 0,31.853 -32.006126,-0.1532 0,-16.0796 c 0,0 1.874685,-0.029 2.756509,-0.3063 1.220171,-0.3841 2.243195,-1.2303 3.369066,-1.8376 0.76378,-0.412 1.567149,-0.7559 2.29709,-1.2252 0.918891,-0.5908 1.86486,-1.1858 2.603369,-1.9908 0.899854,-0.9809 1.516766,-2.1949 2.143951,-3.369 0.656929,-1.2298 1.191713,-2.5243 1.684533,-3.8285 0.416567,-1.1024 1.071975,-3.3691 1.071975,-3.3691 z"></path><path d="m 45.022971,1039.1922 -32.159265,-0.1532 0.459418,-32.1592 15.620214,-0.1532 c 0,0 1.011413,3.1085 1.684533,4.5942 0.527911,1.1652 1.111158,2.3162 1.837673,3.3691 0.534558,0.7747 1.198146,1.4533 1.837672,2.1439 0.735753,0.7945 1.451261,1.621 2.29709,2.2971 0.896031,0.7163 1.910454,1.2742 2.909648,1.8377 0.994232,0.5607 1.992249,1.1354 3.062787,1.5314 0.789585,0.2921 2.45023,0.6125 2.45023,0.6125 z"></path></g></svg></span><div class="illustration" style="background-image: url( ' + carddata.imagesrc + ');"></div><img class="template" src="'+ carddata.type_name + '.svg"><img class="template_text" src="'+ carddata.type_name + '_text.svg"><span class="type">' + carddata.type_name + ' ' + carddata.subtype_name + '</span><span class="text ' + carddata.has_die + '">' + carddata.text + '<br/><span class="flavor">' + carddata.flavor + '</span></span><span class="points">' + carddata.points + '</span><span class="affiliation ' + carddata.affiliation_name + '">' + carddata.affiliation_name + '</span><span class="color">' + carddata.faction_code + '</span><span class="setid">' + carddata.set_code + carddata.position + '</span><span class="rarity">' + carddata.rarity_name + '</span><span class="artist">✍' + carddata.illustrator + '</span>'+ dice);
-	$('#cards').append( newHtml );
+	//var newHtml = ('<div class="card ' + carddata.type_code + ' ' + carddata.faction_code + '"><span class="title ' + lines + '">' + uniqueness + carddata.name + '<br/> <span class="subtitle">' + carddata.subtitle + '</span></span><span class="health">' + carddata.health + '</span><span class="cost">' + carddata.cost + '<svg width="100" height="100" viewBox="0 0 100 100"><g transform="translate(0,-952.36216)"><ellipse cx="49.540581" cy="1003.4341" rx="14.776036" ry="14.776035"></ellipse><path d="m 13.016845,997.99769 0,-32.77182 32.312405,0.61255 0,16.84533 c 0,0 -1.878657,0.39317 -2.756509,0.7657 -0.926793,0.3933 -1.736087,1.02006 -2.603369,1.53139 -1.123681,0.66249 -2.32751,1.20551 -3.369066,1.99082 -1.066768,0.80432 -2.04875,1.73484 -2.909648,2.7565 -0.711591,0.84447 -1.236502,1.83018 -1.837672,2.75651 -0.624482,0.96225 -1.446552,1.83126 -1.837672,2.90965 -0.263379,0.72619 0.03595,1.60456 -0.306279,2.29709 -0.09595,0.19416 -0.459418,0.45942 -0.459418,0.45942 z"></path><path d="m 54.517611,965.83842 32.159265,0.15314 0,32.15927 -16.69219,0 c 0,0 -0.434514,-1.76163 -0.765697,-2.60337 -0.459708,-1.16839 -1.054325,-2.28311 -1.684533,-3.36907 -0.646659,-1.11431 -1.34573,-2.20464 -2.143951,-3.21592 -0.604227,-0.76551 -1.268491,-1.4887 -1.990811,-2.14395 -0.998159,-0.90547 -2.086416,-1.71511 -3.215927,-2.45023 -0.976547,-0.63557 -1.97035,-1.27936 -3.062787,-1.68454 -0.929283,-0.34467 -2.909648,-0.61256 -2.909648,-0.61256 z"></path><path d="m 86.676876,1007.3392 0,31.853 -32.006126,-0.1532 0,-16.0796 c 0,0 1.874685,-0.029 2.756509,-0.3063 1.220171,-0.3841 2.243195,-1.2303 3.369066,-1.8376 0.76378,-0.412 1.567149,-0.7559 2.29709,-1.2252 0.918891,-0.5908 1.86486,-1.1858 2.603369,-1.9908 0.899854,-0.9809 1.516766,-2.1949 2.143951,-3.369 0.656929,-1.2298 1.191713,-2.5243 1.684533,-3.8285 0.416567,-1.1024 1.071975,-3.3691 1.071975,-3.3691 z"></path><path d="m 45.022971,1039.1922 -32.159265,-0.1532 0.459418,-32.1592 15.620214,-0.1532 c 0,0 1.011413,3.1085 1.684533,4.5942 0.527911,1.1652 1.111158,2.3162 1.837673,3.3691 0.534558,0.7747 1.198146,1.4533 1.837672,2.1439 0.735753,0.7945 1.451261,1.621 2.29709,2.2971 0.896031,0.7163 1.910454,1.2742 2.909648,1.8377 0.994232,0.5607 1.992249,1.1354 3.062787,1.5314 0.789585,0.2921 2.45023,0.6125 2.45023,0.6125 z"></path></g></svg></span><div class="illustration" style="background-image: url( ' + carddata.imagesrc + ');"></div><img class="template" src="cards/'+ carddata.type_name + '.svg"><img class="template_text" src="cards/'+ carddata.type_name + '_text.svg"><span class="ctype">' + carddata.type_name + ' ' + carddata.subtype_name + '</span><span class="text ' + carddata.has_die + '">' + carddata.text + '<br/><span class="flavor">' + carddata.flavor + '</span></span><span class="points">' + carddata.points + '</span><span class="affiliation ' + carddata.affiliation_name + '">' + carddata.affiliation_name + '</span><span class="color">' + carddata.faction_code + '</span><span class="setid">' + carddata.set_code + carddata.position + '</span><span class="rarity">' + carddata.rarity_name + '</span><span class="artist">✍' + carddata.illustrator + '</span>'+ dice);
+	
+	//var newHtml = ('<div class="card ' + carddata.type_code + ' ' + carddata.faction_code + '"><div class="illustration" style="background-image: url( ' + carddata.imagesrc + ');"></div></div>');	
+	//
+	var newHtml = ('<div class="card ' + carddata.type_code + ' ' + carddata.faction_code + '"style="background-image: url( ' + carddata.imagesrc + ');"></div>');
+
 	replaceInlineSymbol();
+	return newHtml
 }
 
 function getUrlVars()
