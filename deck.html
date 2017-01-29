@@ -12,16 +12,17 @@
 	<script src="scripts.js" type="text/javascript"></script>
 	<script   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="   crossorigin="anonymous"></script>
 	<script src="jquery.ui.touch-punch.min.js"></script>
-	<link href="card.css" type="text/css" rel="stylesheet">
+	<link href="dice.css" type="text/css" rel="stylesheet">
  </header>
  <body>
- 	<div id="dice"></div>
- 	<div id="deck" class="hide"></div>
+ 	<div id="playmat"></div>
+ 	<div id="dice" class="hide"></div>
  	<div id="actions">
  		<span onclick="selectAction(exhaustDice,$(this))" class="action" style="float: right;">exhaust</span>
  		<span onclick="selectAction(rollDice,$(this))" class="action" style="float: right;">roll</span>
  		<span onclick="selectAction(focusDie,$(this))" class="action" style="float: right;">focus</span>
- 		<span onclick="selectAction(addRemoveDice,$(this))" class="action" style="float: left;">deck</span>
+ 		<span onclick="selectAction(addRemoveCard,$(this))" class="action" style="float: left;">deck</span>
+ 		<span onclick="selectAction(addRemoveDice,$(this))" class="action" style="float: left;">dice</span>
  	</div>
  	<div id="focus" class="hide"><span class="type">error</span> Choose a die first!<br/><div class="dieface" ></div><div class="dieface"></div><div class="dieface"></div><div class="dieface" ></div><div class="dieface"></div><div class="dieface"></div>
  </body>

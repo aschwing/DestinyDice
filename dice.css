@@ -181,7 +181,7 @@ form {
 	padding-right: 0.5mm;
 }
 
-#deck {
+#dice {
 	background: rgba(0, 0, 0, 0.3);
 	position: fixed;
 	bottom: 10mm;
@@ -192,11 +192,11 @@ form {
 	transition-duration: 0.5s;
 }
 
-#deck.show {
+#dice.show {
 	bottom: 0mm;
 }
 
-#deck.hide {
+#dice.hide {
 	bottom: -100%;
 }
 
@@ -209,11 +209,11 @@ form {
 	transition-duration: 0.5s;
 }
 
-#dice .unplayed {
+#playmat .unplayed {
 	display: none;
 }
 
-#dice .inplay {
+#playmat .inplay {
 	display: inline-block;
 }
 
