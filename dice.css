@@ -75,6 +75,7 @@ form {
 	margin-bottom: 5mm;
 	box-shadow: 0.5mm 0.5mm 1mm rgba(0, 0, 0, 0.36);
 	float: left;
+	z-index: 0;
 }
 
 .die.selected {
@@ -315,5 +316,6 @@ form {
 	margin-bottom: 5mm;
 	box-shadow: 0.5mm 0.5mm 1mm rgba(0, 0, 0, 0.36);
 	float: left;
+	z-index: -1;
 }
 
