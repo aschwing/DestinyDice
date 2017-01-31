@@ -42,13 +42,20 @@ function seedDice (id) {
 	fetchCardData(id);
 
 
+	initial_offset = dicecounter * 10
 	var dice = ''
 	if (carddata.has_die) {
     var n = Math.floor((Math.random() * 6));
     console.log(n)
 		face = ('<div class="dieface">[' + carddata.sides[n] + ']</div>')
 	}
-	var newHtml = ('<div onclick="selectDice('+id+''+dicecounter+', $(this))"  id="'+id+''+dicecounter+'" class="die unplayed ' + carddata.faction_code + ' exhausted"><span class="id"><span class="type">'+ carddata.type_name[0] + '</span> ' + carddata.name[0] + carddata.name[1] + carddata.name[2] + carddata.name[3] + carddata.name[4] +'</span>' + face + '</div>');
+	var newHtml = '<div onclick="selectDice('+id+''+dicecounter+', $(this))" ' +
+		      'id="'+id+''+dicecounter+'" ' +
+		      'class="die unplayed ' + carddata.faction_code + ' exhausted" ' +
+                      'style="left:'+initial_offset+'px; top:'+initial_offset+'px;">' +
+                      '<span class="id"><span class="type">'+ carddata.type_name[0] + '</span> ' + 
+		      carddata.name[0] + carddata.name[1] + carddata.name[2] + carddata.name[3] + 
+                      carddata.name[4] +'</span>' + face + '</div>';
 	$('#playmat').append( newHtml );
 	replaceInlineSymbol();
 	$('#'+id+''+dicecounter).data(carddata)
@@ -63,7 +70,13 @@ dicecounter += 1;
 function seedDeck (id) {
 	fetchCardData(id);
 
-	var newHtml = ('<div onclick="selectCard(\'c'+id+''+cardcounter+'\', $(this))" class="card unplayed ' + carddata.type_code + ' ' + carddata.faction_code + '" id="c'+id+''+cardcounter+'" style="background-image: url( ' + carddata.imagesrc + ');"></div></div>');
+	initial_offset = cardcounter * 25
+	var newHtml = '<div onclick="selectCard(\'c'+id+''+cardcounter+'\', $(this))" '                 +
+		      'class="card unplayed ' + carddata.type_code + ' ' + carddata.faction_code + '" ' +
+                      'id="c'+id+''+cardcounter+'" ' +
+                      'style="left:'+initial_offset+'px; top:'+initial_offset+'px;">' +
+                      '<img src="' + carddata.imagesrc + '"></img>' +
+                      '<\div>';
 	//newHtml = addCardHTML(id)
 	$('#playmat').append( newHtml );
 	replaceInlineSymbol();
@@ -170,6 +183,9 @@ function addRemoveDice() {
 }
 
 function addRemoveDeck() {
+	/* TODO: When the Deck appears, the cards are
+         * going to be draggable.  Once it leaves,
+         * however, they are locked in position. */
 	if ($('#dice').attr('class') == 'show') {
 		$('#dice').removeClass('show');
 		$('#dice').addClass('hide');

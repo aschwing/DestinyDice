@@ -65,7 +65,7 @@ form {
 }
 
 .die {
-	position: relative;
+	position: absolute;
 	width: 20mm;
 	height: 20mm;
 	border-radius: 4mm;
@@ -75,7 +75,7 @@ form {
 	margin-bottom: 5mm;
 	box-shadow: 0.5mm 0.5mm 1mm rgba(0, 0, 0, 0.36);
 	float: left;
-	z-index: 0;
+	z-index: 1000;
 }
 
 .die.selected {
@@ -290,23 +290,8 @@ form {
 
 /** This is the Card stuff!! **/
 
-.old_card {
-	background: url() 20px 8px;
-	width: 300px;
-	height: 419px;
-	position: relative;
-	font-family: Roboto;
-	overflow: hidden;
-	border-radius: 20px;
-	border-style: solid;
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28);
-	background: white;
-	margin: 10px;
-	float: left;
-	z-index: -1;
-}
 .card {
-	position: relative;
+	position: absolute;
 	width: 300px;
 	height: 419px;
 	border-radius: 4mm;
@@ -316,6 +301,6 @@ form {
 	margin-bottom: 5mm;
 	box-shadow: 0.5mm 0.5mm 1mm rgba(0, 0, 0, 0.36);
 	float: left;
-	z-index: -1;
+	z-index: 1;
 }
 
