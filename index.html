@@ -14,14 +14,19 @@
 	<form>
 	<script>
 		function generateDice() {
-			var dicepool = $('[name = pool]').val()
-			var link = ('deck.html?dicepool='+dicepool)
+			var awa_pool = $('[name = awa_pool]').val()
+			var sor_pool = $('[name = sor_pool]').val()
+			var link = ('deck.html?awa_pool='+awa_pool+'&sor_pool='+sor_pool)
 			window.location.href = link;
 		}
 	</script>
 	<h1 style="font-family: teko; font-weight: 300;">SW Destiny 'Kitchen' Dice</h1>
-	<input type="text" size="50" name="pool" value="29,45,65,65">
+	Awakenings: <input type="text" size="50" name="awa_pool" value="29,45,65,65"></br>
+	Spirit of Rebellion: <input type="text" size="50" name="sor_pool" value="1,2,3,4"></br>
+	</br>
 	<a href="#" onclick="generateDice()">Generate Dice</a>
+	<br/>	<br/>
+	<br/>	<br/>
 	<br/>	<br/>
 	
 	
