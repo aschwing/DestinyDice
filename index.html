@@ -16,13 +16,33 @@
 		function generateDice() {
 			var awa_pool = $('[name = awa_pool]').val()
 			var sor_pool = $('[name = sor_pool]').val()
-			var link = ('deck.html?awa_pool='+awa_pool+'&sor_pool='+sor_pool)
+			var eaw_pool = $('[name = eaw_pool]').val()
+			var link = ('deck.html?awa_pool='+awa_pool+'&sor_pool='+sor_pool+'&eaw_pool='+eaw_pool)
 			window.location.href = link;
 		}
 	</script>
 	<h1 style="font-family: teko; font-weight: 300;">SW Destiny 'Kitchen' Dice</h1>
-	Awakenings: <input type="text" size="50" name="awa_pool" value="29,45,65,65"></br>
-	Spirit of Rebellion: <input type="text" size="50" name="sor_pool" value="1,2,3,4"></br>
+
+
+	<table>
+	<tr> <td>
+	<a href="https://swdestinydb.com/set/AW">Awakenings</a>:
+	</td><td>
+	<input type="text" size="50" name="awa_pool" value="29,45,65,65"></br>
+	</td></tr>
+	<tr> <td>
+	<a href="https://swdestinydb.com/set/SoR">Spirit of Rebellion</a>:
+	</td> <td>
+	<input type="text" size="50" name="sor_pool" value="1,2,3,4"></br>
+	</td></tr>
+	<tr> <td>
+	<a href="https://swdestinydb.com/set/Eaw">Empire at War</a>:
+	</td> <td>
+	<input type="text" size="50" name="eaw_pool" value="1,2,3,4"></br>
+	</td></tr>
+	</table>
+
+
 	</br>
 	<a href="#" onclick="generateDice()">Generate Dice</a>
 	<br/>	<br/>

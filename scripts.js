@@ -1,13 +1,15 @@
 var carddata = new Object();
 var cardid = ""
 var cardurl = ""
-var deck = [29,45,65,65,8,8,55,55,34,34,67,67,5,5,64,64,32,6]
+var deck = []
 
 var dicepool = {};
     dicepool['01'] = getUrlVars()["awa_pool"];
     dicepool['01'] = JSON.parse("[" + dicepool['01'] + "]");
     dicepool['02'] = getUrlVars()["sor_pool"];
     dicepool['02'] = JSON.parse("[" + dicepool['02'] + "]");
+    dicepool['03'] = getUrlVars()["eaw_pool"];
+    dicepool['03'] = JSON.parse("[" + dicepool['03'] + "]");
 
 var dicecounter = 1;
 var cardcounter = 1;
@@ -26,6 +28,11 @@ for (i = 0; i < dicepool['02'].length; i++) {
    var id = dicepool['02'][i];
    var idwithzeroes = ("00" + id).slice(-3);
    dicelist.push('02'+idwithzeroes);
+}
+for (i = 0; i < dicepool['03'].length; i++) {
+   var id = dicepool['03'][i];
+   var idwithzeroes = ("00" + id).slice(-3);
+   dicelist.push('03'+idwithzeroes);
 }
 
 	if (dicelist.length >= 1) {
